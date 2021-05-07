@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import DialogView from "../viewlibraries/dialog-view";
 import _ from "lodash";
 
 import "../styles/transaction-form.css";
+import DialogView from "../viewlibraries/dialog-view";
+import homeUtils from "../utils/home-utils";
+import categoriesData from "../tack/categories";
 import { closeDialog, createNewTransaction } from "../actions/transactions";
+import alertify from "../viewlibraries/notistack/notistack-store";
 
 const AddTransactionDialogView = (props) => {
   const [desc, setDesc] = useState("");
-  const [amount, setAmount] = useState("");
-  const [datetime, setDatetime] = useState("");
-  const [category, setCategory] = useState();
+  const [amount, setAmount] = useState();
+  const [datetime, setDatetime] = useState();
+  const [category, setCategory] = useState("");
+
+  const [emptyFields, setEmptyFields] = useState();
 
   const dispatch = useDispatch();
 
@@ -37,6 +42,19 @@ const AddTransactionDialogView = (props) => {
     dispatch(closeDialog());
   };
 
+  const validateFormData = () => {
+    if (desc && amount && datetime && category) return true;
+    else {
+      let emptyFields = [];
+      if (!desc) emptyFields.push("desc");
+      if (!amount) emptyFields.push("amount");
+      if (!datetime) emptyFields.push("datetime");
+      if (!category) emptyFields.push("category");
+      setEmptyFields(emptyFields);
+      alertify.error("Please fill the required fields");
+    }
+  };
+
   const handleButtonClicked = (buttonId) => {
     switch (buttonId) {
       case "close":
@@ -51,8 +69,16 @@ const AddTransactionDialogView = (props) => {
         break;
 
       case "save":
-        let translationData = { desc, amount, datetime, category };
-        dispatch(createNewTransaction(translationData));
+        if (validateFormData()) {
+          const translationData = {
+            desc,
+            amount,
+            datetime,
+            category,
+            type: homeUtils.getTransactionTypeFromCategory(category),
+          };
+          dispatch(createNewTransaction(translationData));
+        }
         break;
 
       default:
@@ -60,59 +86,7 @@ const AddTransactionDialogView = (props) => {
     }
   };
 
-  const categoryData = [
-    {
-      id: "shopping",
-      label: "Shopping",
-      type: "debit",
-    },
-    {
-      id: "bill",
-      label: "Bill & Payments",
-      type: "debit",
-    },
-    {
-      id: "food",
-      label: "Food",
-      type: "debit",
-    },
-    {
-      id: "travel",
-      label: "Travel",
-      type: "debit",
-    },
-    {
-      id: "entertainment",
-      label: "Entertainment",
-      type: "debit",
-    },
-    {
-      id: "charity",
-      label: "Help & Charity",
-      type: "debit",
-    },
-    {
-      id: "other_debit",
-      label: "Other costs",
-      type: "debit",
-    },
-    {
-      id: "salary",
-      label: "Salary",
-      type: "credit",
-    },
-    {
-      id: "gift",
-      label: "Gift",
-      type: "credit",
-    },
-    {
-      id: "other_income",
-      label: "Other Incomes",
-      type: "credit",
-    },
-  ];
-  const categoryChipsView = _.map(categoryData, (data) => {
+  const categoryChipsView = _.map(categoriesData, (data) => {
     let wrapperClassName = "categoryChipWrapper ";
     if (data.id === category) {
       wrapperClassName += "selected";
@@ -128,43 +102,68 @@ const AddTransactionDialogView = (props) => {
     );
   });
 
+  const descClassName = _.includes(emptyFields, "desc")
+    ? "required"
+    : "required hidden";
+  const amountClassName = _.includes(emptyFields, "amount")
+    ? "required"
+    : "required hidden";
+  const datetimeClassName = _.includes(emptyFields, "datetime")
+    ? "required"
+    : "required hidden";
+  const categoryClassName = _.includes(emptyFields, "category")
+    ? "required"
+    : "required hidden";
+
   const addTransactionForm = (
     <div>
       <div className="form-group">
         <label htmlFor="desc">Description</label>
-        <input
-          type="text"
-          className="form-control"
-          name="desc"
-          value={desc}
-          onChange={onChangeDesc}
-        />
+        <div className="inputWrapper">
+          <input
+            type="text"
+            className="form-control"
+            name="desc"
+            value={desc}
+            onChange={onChangeDesc}
+          />
+          <span className={descClassName}>Required!</span>
+        </div>
       </div>
 
-      <div className="form-group">
+      <div className="form-group amount">
         <label htmlFor="amount">Amount</label>
-        <input
-          type="number"
-          className="form-control"
-          name="amount"
-          value={amount}
-          onChange={onChangeAmount}
-        />
+        <div className="inputWrapper">
+          <input
+            type="number"
+            className="form-control"
+            name="amount"
+            value={amount}
+            onChange={onChangeAmount}
+          />
+          <span className={amountClassName}>Required!</span>
+        </div>
       </div>
 
-      <div className="form-group">
+      <div className="form-group datetime">
         <label htmlFor="datetime">Date & time</label>
-        <input
-          classname="form-control"
-          type="datetime-local"
-          name="datetime"
-          value={datetime}
-          onChange={onChangeDatetime}
-        ></input>
+        <div className="inputWrapper">
+          <input
+            classname="form-control"
+            type="datetime-local"
+            name="datetime"
+            value={datetime}
+            onChange={onChangeDatetime}
+          />
+          <span className={datetimeClassName}>Required!</span>
+        </div>
       </div>
 
       <div className="form-group">
-        <label htmlFor="category">Category</label>
+        <div className="inputWrapper">
+          <label htmlFor="category">Category</label>
+          <span className={categoryClassName}>Required!</span>
+        </div>
         <div className="categoryChipsContainer">{categoryChipsView}</div>
       </div>
     </div>
