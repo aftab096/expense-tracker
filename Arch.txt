@@ -1,0 +1,37 @@
+Expense
+{
+    ex_id,
+    description,
+    cost,
+    expense_date,
+    expense_time,
+    product_id(product/service/bill),
+    expense_for(for whom the expense was made),
+    user_id
+},
+
+User {
+    user_id,
+    name,
+    user_budget
+},
+
+Person {
+    pers_id,
+    name,
+    relation_with_user_type(family/friend/charity),
+    user_id
+},
+
+Products {
+    product_id,
+    label,
+    product_type,
+},
+
+Incomes
+{
+    I_id,
+    desc,
+    user_id
+}

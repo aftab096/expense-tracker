@@ -1,0 +1,19 @@
+.categoryChipsContainer {
+    display: inline-block;
+    width: 100%;
+    margin-left: 10px;
+}
+.categoryChipWrapper {
+    height: 22px;
+    margin: 3px 5px;
+    padding: 0 10px;
+    font-size: 12px;
+    float: left;
+    width: auto;
+    background-color: #eee;
+    cursor: pointer;
+    border-radius: 12px;
+}
+.categoryChipWrapper.selected {
+    box-shadow: 0 0 2px 0 #152078;
+}

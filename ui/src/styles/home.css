@@ -1,0 +1,231 @@
+.homeContainer {
+  height: 540px;
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  padding-top: 30px;
+}
+
+/*-------------------------------SIDEBAR NAVIGATION CSS-----------------------------------------*/
+.sidebarNavigationContainer {
+  height: 100%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  padding-left: 15px;
+  padding-top: 35px;
+  background-color: #fff;
+  flex: 2;
+  min-width: 130px;
+}
+
+.sidebarNavigationContainer .sideNavigationItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 0.8em;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.sidebarNavigationContainer .sideNavigationItem.selected {
+  font-weight: 500;
+  color: #000;
+}
+
+.sideNavIcon {
+  height: 24px;
+  width: 36px;
+  opacity: 0.4;
+  cursor: pointer;
+  float: left;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+.sidebarNavigationContainer .sideNavigationItem.selected .sideNavIcon {
+  opacity: 1;
+}
+.sideNavIcon.dashboardIcon {
+  background-image: url("./icons/dashboard-line.svg");
+}
+.sideNavIcon.expensesIcon {
+  background-image: url("./icons/icons8-bill-24.png");
+}
+.sideNavIcon.incomesIcon {
+  background-image: url("./icons/icons8-receive-cash-24.png");
+}
+.sideNavIcon.savingsIcon {
+  background-image: url("./icons/icons8-money-box-24.png");
+}
+.sideNavIcon.settingIcon {
+  background-image: url("./icons/icons8-settings-24.png");
+}
+
+/*-------------------------------CENTRAL BODY CSS-----------------------------------------*/
+.centralBodyContainer {
+  height: 100%;
+  flex: 8;
+  margin-left: 30px;
+}
+
+.topCategoriesCardsContainer {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.categoryCardView {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    padding: 15px 0 15px 15px;
+    width: 30%;
+}
+
+.categoryCardWrapper {
+    float: left;
+}
+.categoryLabel {
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 500;
+    font-size: 0.9em;
+}
+.totalExpense {
+    font-weight: 600;
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+.categoryCardIcon {
+    float: right;
+    height: 85px;
+    width: 60px;
+    background-repeat: no-repeat;
+    background-size: 100px;
+    opacity: 0.2;
+}
+/*-------------------------------TRANSACTIONS CSS-----------------------------------------*/
+
+.transactionViewContainer {
+  height: 100%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  background-color: #fff;
+  flex: 3.5;
+  margin-left: 30px;
+}
+
+.transactionsHeader {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.transactionsIcon {
+  height: 24px;
+  width: 36px;
+  opacity: 0.8;
+  float: left;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-image: url("./icons/calendar.svg");
+}
+
+.transactionsViewMainContainer {
+    height: calc(100% - 115px);
+}
+
+.transactionWrapper {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  padding: 10px 5px 10px 5px;
+  align-items: center;
+}
+
+.transactionWrapper .amount {
+  font-weight: 500;
+  flex: 1;
+}
+.transactionWrapper .amount.credit {
+  color: rgb(31, 190, 39);
+}
+.transactionWrapper .amount.debit {
+  color: rgb(221, 7, 7);
+}
+
+.categoryIcon {
+  height: 36px;
+  width: 36px;
+  flex: 2;
+  margin-left: 10px;
+  opacity: 0.8;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.bill {
+  background-image: url("./icons/bill.svg");
+}
+.shopping {
+  background-image: url("./icons/cart.svg");
+}
+.salary {
+  background-image: url("./icons/salary.svg");
+}
+.travel {
+  background-image: url("./icons/delivery.svg");
+}
+.food {
+  background-image: url("./icons/dish.svg");
+}
+
+.transactionLabel {
+  margin-left: 10px;
+  flex: 10;
+}
+.transactionLabel .transactionDescription {
+  font-size: 0.8em;
+  font-weight: 500;
+}
+.transactionLabel .transactionDate {
+  font-size: 0.7em;
+}
+
+.transactionEditIcon {
+  height: 24px;
+  width: 24px;
+  margin-left: 10px;
+  opacity: 0.8;
+  cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-image: url("./icons/more.svg");
+}
+
+.walletIcon {
+  height: 24px;
+  width: 24px;
+  margin-left: 10px;
+  opacity: 0.8;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-image: url("./icons/wallet.svg");
+}
+
+.addTransactionWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.addTransactionWrapper .addTransactionLabel {
+    font-weight: 500;
+}
+.addTransactionWrapper .addTransactionBtn {
+  font-size: 0.8em;
+}
