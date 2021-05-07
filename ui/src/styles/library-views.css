@@ -1,4 +1,15 @@
-.customDialogTitle{
-    background-color: #3248A7;
-    color: #fff;
+.customDialogTitle {
+  background-color: #3248a7;
+  color: #fff;
+}
+
+.messageCloseButton {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-image: url("./icons/close.svg");
 }
