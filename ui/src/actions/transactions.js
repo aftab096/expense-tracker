@@ -31,6 +31,7 @@ export const getTransactionsData = () => (dispatch) => {
 export const createNewTransaction = (transactionData) => async (dispatch) => {
   try {
     const data = await HomeService.createTransaction(transactionData);
+    alertify.success(data.data.success);
     dispatch({
       type: CLOSE_ADD_TRANSACTION_DIALOG,
     });

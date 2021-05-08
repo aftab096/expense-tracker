@@ -10,7 +10,7 @@ router.post("/signup", async (req, res) => {
   const { username, name, password, email } = req.body;
   try {
     let user = await getUser(username, username);
-    
+
     if (user.length === 0) {
       const query = `INSERT INTO ${tableNameCosntants.USERS}
             (user_id, name, password, email) VALUES (
@@ -34,7 +34,7 @@ let getUser = (username, email) => {
   return new Promise((resolve, reject) => {
     connection.query(query, (err, result) => {
       if (err) return reject(err);
-        resolve(result);
+      resolve(result);
     });
   });
 };
@@ -51,10 +51,18 @@ router.post("/signin", async (req, res) => {
       connection.query(query, (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
-          const user = { username: result[0].user_id, email: result[0].email };
+          const user = {
+            username: result[0].user_id,
+            email: result[0].email,
+            name: result[0].name,
+          };
 
           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-          res.json({ success: username, accessToken: accessToken });
+          res.json({
+            userId: username,
+            name: user.name,
+            accessToken: accessToken,
+          });
         } else {
           res.status(500).json({ message: "incorrect password" });
         }

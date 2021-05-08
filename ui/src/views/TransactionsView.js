@@ -23,6 +23,11 @@ const TransactionsView = () => {
     dispatch(openDialog());
   }
 
+  const getDateAndTime = (timestamp) => {
+    const dateObject = new Date(timestamp);
+    return `${dateObject.toDateString()} ${dateObject.toTimeString().split(" ")[0]}`;
+  }
+
   const getTransactionsHeaderView = () => {
     return (
       <div className="transactionsHeader">
@@ -38,16 +43,16 @@ const TransactionsView = () => {
       let categoryIconClassName = `categoryIcon ${data.category}`;
       let amountClassName = `amount ${data.type}`;
       let transactionView = (
-        <div className="transactionWrapper" key={data.id}>
+        <div className="transactionWrapper" key={data.t_id}>
           <div className={categoryIconClassName} />
           <div className="transactionLabel">
             <div className="transactionDescription">{data.description}</div>
-            <div className="transactionDate">{data.date}</div>
+            <div className="transactionDate">{getDateAndTime(data.datetime)}</div>
           </div>
           <div className={amountClassName}>{`₹${data.amount}`}</div>
           <div
             className="transactionEditIcon"
-            onClick={editBtnClickHandler.bind(this, data.id)}
+            onClick={editBtnClickHandler.bind(this, data.t_id)}
           />
         </div>
       );

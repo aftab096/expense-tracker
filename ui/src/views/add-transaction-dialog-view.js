@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 
 import "../styles/transaction-form.css";
 import DialogView from "../viewlibraries/dialog-view";
 import homeUtils from "../utils/home-utils";
 import categoriesData from "../tack/categories";
-import { closeDialog, createNewTransaction } from "../actions/transactions";
+import {
+  closeDialog,
+  createNewTransaction,
+  getTransactionsData,
+} from "../actions/transactions";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
 const AddTransactionDialogView = (props) => {
@@ -18,6 +22,8 @@ const AddTransactionDialogView = (props) => {
   const [emptyFields, setEmptyFields] = useState();
 
   const dispatch = useDispatch();
+
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   const onChangeDesc = (e) => {
     const desc = e.target.value;
@@ -76,9 +82,11 @@ const AddTransactionDialogView = (props) => {
             datetime: homeUtils.getTimestampValueFromString(datetime),
             category,
             type: homeUtils.getTransactionTypeFromCategory(category),
+            userId: currentUser.userId,
           };
           dispatch(createNewTransaction(translationData))
-          .then(()=>handleDialogClose());
+            .then(() => dispatch(getTransactionsData()))
+            .then(() => handleDialogClose());
         }
         break;
 

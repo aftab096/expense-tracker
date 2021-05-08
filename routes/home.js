@@ -2,53 +2,22 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const tableNameCosntants = require("../tack/table-name-constants").tables;
 
 const connection = require("../connection");
 
 router.get("/transactions", (req, res) => {
-  let mockResponse = [
-    {
-      id: 1,
-      description: "Mobile Recharge Self",
-      date: "27-04-2021 Tuesday",
-      amount: 199,
-      type: "debit",
-      category: "bill",
-    },
-    {
-      id: 2,
-      description: "D-Mart",
-      date: "26-04-2021 Monday",
-      amount: 6000,
-      type: "debit",
-      category: "shopping",
-    },
-    {
-      id: 3,
-      description: "Salary",
-      date: "25-04-2021 Sunday",
-      amount: 50000,
-      type: "credit",
-      category: "salary",
-    },
-    {
-      id: 4,
-      description: "Cab",
-      date: "25-04-2021 Sunday",
-      amount: 400,
-      type: "debit",
-      category: "travel",
-    },
-    {
-      id: 5,
-      description: "Maaz restaurant",
-      date: "20-04-2021 Tuesday",
-      amount: 800,
-      type: "debit",
-      category: "food",
-    },
-  ];
-  res.json({ success: mockResponse });
+
+  const query = `SELECT * FROM ${tableNameCosntants.TRANSACTIONS} ORDER BY datetime DESC LIMIT 5`;
+
+  connection.query(query, (err, result) => {
+    if (err) res.status(500).json(err.stack);
+    else {
+      res.json({success: result});
+    }
+  });
+
+  // res.json({ success: mockResponse });
 });
 
 router.get("/topcategories", (req, res) => {

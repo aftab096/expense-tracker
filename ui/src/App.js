@@ -43,7 +43,7 @@ const App = () => {
               <div className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link to={"/profile"} className="nav-link">
-                    {currentUser.success}
+                    {`Hi, ${currentUser.name.split(" ")[0]}`}
                   </Link>
                 </li>
                 <li className="nav-item">
