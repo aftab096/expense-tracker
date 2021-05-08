@@ -73,11 +73,12 @@ const AddTransactionDialogView = (props) => {
           const translationData = {
             desc,
             amount,
-            datetime,
+            datetime: homeUtils.getTimestampValueFromString(datetime),
             category,
             type: homeUtils.getTransactionTypeFromCategory(category),
           };
-          dispatch(createNewTransaction(translationData));
+          dispatch(createNewTransaction(translationData))
+          .then(()=>handleDialogClose());
         }
         break;
 

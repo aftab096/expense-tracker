@@ -6,6 +6,7 @@ import {
 } from "./types";
 
 import HomeService from "../services/home-service";
+import alertify from "../viewlibraries/notistack/notistack-store";
 
 export const getTransactionsData = () => (dispatch) => {
   return HomeService.getTransactionsData().then(
@@ -27,23 +28,16 @@ export const getTransactionsData = () => (dispatch) => {
   );
 };
 
-export const createNewTransaction = (transactionData) => (dispatch) => {
-  return HomeService.createTransaction(transactionData).then(
-    (data) => {
-      dispatch({
-        type: CLOSE_ADD_TRANSACTION_DIALOG,
-      });
-
-      return Promise.resolve();
-    },
-    (error) => {
-      dispatch({
-        type: APPLICATION_ERROR,
-      });
-
-      return Promise.reject();
-    }
-  );
+export const createNewTransaction = (transactionData) => async (dispatch) => {
+  try {
+    const data = await HomeService.createTransaction(transactionData);
+    dispatch({
+      type: CLOSE_ADD_TRANSACTION_DIALOG,
+    });
+    return await Promise.resolve();
+  } catch (error) {
+    alertify.error(error.toString() || "APPLICATION ERROR!");
+  }
 };
 
 export const openDialog = () => (dispatch) => {
