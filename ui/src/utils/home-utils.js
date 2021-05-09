@@ -6,6 +6,11 @@ const getTransactionTypeFromCategory = (category) => {
   return categoryData.type;
 };
 
+const getLabelFromCategory = (category) => {
+  const categoryData = _.find(categoriesData, { id: category });
+  return categoryData.label;
+};
+
 const getTimestampValueFromString = (datetimeString) => {
   if (datetimeString) return new Date(datetimeString).valueOf();
   return null;
@@ -14,5 +19,5 @@ const getTimestampValueFromString = (datetimeString) => {
 export default {
   getTransactionTypeFromCategory,
   getTimestampValueFromString,
-  
+  getLabelFromCategory,
 };

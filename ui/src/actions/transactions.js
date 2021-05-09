@@ -10,10 +10,10 @@ import alertify from "../viewlibraries/notistack/notistack-store";
 
 export const getTransactionsData = () => (dispatch) => {
   return HomeService.getTransactionsData().then(
-    (data) => {
+    (res) => {
       dispatch({
         type: SET_TRANSACTIONS_DATA,
-        payload: { transactionsData: data.data.success },
+        payload: { transactionsData: res.data.success },
       });
 
       return Promise.resolve();
@@ -30,8 +30,8 @@ export const getTransactionsData = () => (dispatch) => {
 
 export const createNewTransaction = (transactionData) => async (dispatch) => {
   try {
-    const data = await HomeService.createTransaction(transactionData);
-    alertify.success(data.data.success);
+    const res = await HomeService.createTransaction(transactionData);
+    alertify.success(res.data.success);
     dispatch({
       type: CLOSE_ADD_TRANSACTION_DIALOG,
     });
