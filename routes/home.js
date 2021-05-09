@@ -7,17 +7,14 @@ const tableNameCosntants = require("../tack/table-name-constants").tables;
 const connection = require("../connection");
 
 router.get("/transactions", (req, res) => {
-
   const query = `SELECT * FROM ${tableNameCosntants.TRANSACTIONS} ORDER BY datetime DESC LIMIT 5`;
 
   connection.query(query, (err, result) => {
     if (err) res.status(500).json(err.stack);
     else {
-      res.json({success: result});
+      res.json({ success: result });
     }
   });
-
-  // res.json({ success: mockResponse });
 });
 
 router.get("/topcategories", (req, res) => {

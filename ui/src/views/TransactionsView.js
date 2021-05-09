@@ -45,7 +45,7 @@ const TransactionsView = () => {
       let transactionView = (
         <div className="transactionWrapper" key={data.t_id}>
           <div className={categoryIconClassName} />
-          <div className="transactionLabel">
+          <div className="transactionLabel" title={data.description}>
             <div className="transactionDescription">{data.description}</div>
             <div className="transactionDate">{getDateAndTime(data.datetime)}</div>
           </div>

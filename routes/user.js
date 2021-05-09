@@ -8,25 +8,21 @@ const tableNameCosntants = require("../tack/table-name-constants").tables;
 
 router.post("/signup", async (req, res) => {
   const { username, name, password, email } = req.body;
-  try {
-    let user = await getUser(username, username);
+  let user = await getUser(username, username);
 
-    if (user.length === 0) {
-      const query = `INSERT INTO ${tableNameCosntants.USERS}
+  if (user.length === 0) {
+    const query = `INSERT INTO ${tableNameCosntants.USERS}
             (user_id, name, password, email) VALUES (
             '${username}', 
             '${name}', 
             '${password}', 
             '${email}')`;
 
-      connection.query(query, (err, result) => {
-        if (err) throw err;
-        res.json({ success: username });
-      });
-    } else res.json({ error: username });
-  } catch (err) {
-    res.json({ error: err.stack });
-  }
+    connection.query(query, (err, result) => {
+      if (err) res.status(500).json({ error: err.stack });
+      else res.json({ success: username });
+    });
+  } else res.json({ error: username });
 });
 
 let getUser = (username, email) => {
@@ -41,36 +37,30 @@ let getUser = (username, email) => {
 
 router.post("/signin", async (req, res) => {
   const { username, password } = req.body;
-  try {
-    let user = await getUser(username, username);
-    if (user.length > 0) {
-      const query = `SELECT * FROM ${tableNameCosntants.USERS}
+  let user = await getUser(username, username);
+  if (user.length > 0) {
+    const query = `SELECT * FROM ${tableNameCosntants.USERS}
             WHERE (user_id = '${username}' OR email = '${username}')
             AND password = '${password}';`;
 
-      connection.query(query, (err, result) => {
-        if (err) throw err;
-        if (result.length > 0) {
-          const user = {
-            username: result[0].user_id,
-            email: result[0].email,
-            name: result[0].name,
-          };
+    connection.query(query, (err, result) => {
+      if (err) res.status(500).json(err.stack);
+      else if (result.length > 0) {
+        const user = {
+          username: result[0].user_id,
+          email: result[0].email,
+          name: result[0].name,
+        };
 
-          const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-          res.json({
-            userId: username,
-            name: user.name,
-            accessToken: accessToken,
-          });
-        } else {
-          res.status(500).json({ message: "incorrect password" });
-        }
-      });
-    } else res.status(500).json({ message: `user not found => ${username}` });
-  } catch (err) {
-    res.status(500).json({ message: err.stack });
-  }
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+        res.json({
+          userId: username,
+          name: user.name,
+          accessToken: accessToken,
+        });
+      } else res.status(500).json({ message: "incorrect password" });
+    });
+  } else res.status(500).json({ message: `user not found => ${username}` });
 });
 
 module.exports = router;

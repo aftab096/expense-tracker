@@ -188,6 +188,10 @@
 .transactionLabel .transactionDescription {
   font-size: 0.8em;
   font-weight: 500;
+  white-space: nowrap; 
+  max-width: 165px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 .transactionLabel .transactionDate {
   font-size: 0.7em;
