@@ -1,4 +1,4 @@
 exports.tables = {
-    USERS: 'users',
-    TRANSACTIONS: 'transactions'
+  USERS: "users",
+  TRANSACTIONS: "transactions",
 };

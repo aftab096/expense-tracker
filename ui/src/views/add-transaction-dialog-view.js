@@ -11,6 +11,7 @@ import {
   createNewTransaction,
   getTransactionsData,
 } from "../actions/transactions";
+import { getTopCategoriesData } from "../actions/dashboard";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
 const AddTransactionDialogView = (props) => {
@@ -86,6 +87,7 @@ const AddTransactionDialogView = (props) => {
           };
           dispatch(createNewTransaction(translationData))
             .then(() => dispatch(getTransactionsData()))
+            .then(() => dispatch(getTopCategoriesData()))
             .then(() => handleDialogClose());
         }
         break;

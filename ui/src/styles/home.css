@@ -180,14 +180,24 @@
 .food {
   background-image: url("./icons/dish.svg");
 }
-
+.gift {
+  background-image: url("./icons/gift-box.svg");
+}
+.fashion {
+  background-image: url("./icons/clothes.svg");
+}
+.care {
+  background-image: url("./icons/beauty.svg");
+}
+.health {
+  background-image: url("./icons/drugs.svg");
+}
 .transactionLabel {
   margin-left: 10px;
   flex: 10;
 }
 .transactionLabel .transactionDescription {
-  font-size: 0.8em;
-  font-weight: 500;
+  font-size: 0.9em;
   white-space: nowrap; 
   max-width: 165px; 
   overflow: hidden;

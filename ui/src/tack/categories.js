@@ -5,6 +5,11 @@ const categoriesData = [
     type: "debit",
   },
   {
+    id: "fashion",
+    label: "Clothes & Shoes",
+    type: "debit",
+  },
+  {
     id: "bill",
     label: "Bill & Payments",
     type: "debit",
@@ -15,6 +20,16 @@ const categoriesData = [
     type: "debit",
   },
   {
+    id: "care",
+    label: "Personal care",
+    type: "debit",
+  },
+  {
+    id: "health",
+    label: "Health & Medicine",
+    type: "debit",
+  },
+  {
     id: "travel",
     label: "Travel",
     type: "debit",
@@ -22,6 +37,11 @@ const categoriesData = [
   {
     id: "entertainment",
     label: "Entertainment",
+    type: "debit",
+  },
+  {
+    id: "gift",
+    label: "Gift",
     type: "debit",
   },
   {
@@ -40,8 +60,8 @@ const categoriesData = [
     type: "credit",
   },
   {
-    id: "gift",
-    label: "Gift",
+    id: "gift_r",
+    label: "Gift Recieved",
     type: "credit",
   },
   {
