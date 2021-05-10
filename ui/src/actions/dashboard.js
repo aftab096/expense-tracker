@@ -21,12 +21,9 @@ export const getTopCategoriesData = () => (dispatch) => {
       });
 
       return Promise.resolve();
-    },
-    (error) => {
-      dispatch({
-        type: APPLICATION_ERROR,
-      });
-
+    })
+    .catch((error) => {
+      alertify.error(error.toString() || "APPLICATION ERROR!");
       return Promise.reject();
     }
   );

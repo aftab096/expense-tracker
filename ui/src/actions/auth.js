@@ -10,8 +10,8 @@ import {
 import AuthService from "../services/auth-service";
 
 export const register = (registerData) => (dispatch) => {
-  return AuthService.register(registerData).then(
-    (data) => {
+  return AuthService.register(registerData)
+    .then((data) => {
       dispatch({
         type: REGISTER_SUCCESS,
       });
@@ -24,8 +24,8 @@ export const register = (registerData) => (dispatch) => {
 
       console.log(data);
       return Promise.resolve();
-    },
-    (error) => {
+    })
+    .catch((error) => {
       const message =
         (error.response &&
           error.response.data &&
@@ -43,8 +43,7 @@ export const register = (registerData) => (dispatch) => {
       });
 
       return Promise.reject();
-    }
-  );
+    });
 };
 
 export const login = (username, password) => (dispatch) => {
@@ -52,7 +51,7 @@ export const login = (username, password) => (dispatch) => {
     .then((data) => {
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: { user: data},
+        payload: { user: data },
       });
 
       return Promise.resolve();

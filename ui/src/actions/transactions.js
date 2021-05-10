@@ -1,6 +1,5 @@
 import {
   SET_TRANSACTIONS_DATA,
-  APPLICATION_ERROR,
   OPEN_ADD_TRANSACTION_DIALOG,
   CLOSE_ADD_TRANSACTION_DIALOG,
 } from "./types";
@@ -8,24 +7,18 @@ import {
 import HomeService from "../services/home-service";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
-export const getTransactionsData = () => (dispatch) => {
-  return HomeService.getTransactionsData().then(
-    (res) => {
-      dispatch({
-        type: SET_TRANSACTIONS_DATA,
-        payload: { transactionsData: res.data.success },
-      });
-
-      return Promise.resolve();
-    },
-    (error) => {
-      dispatch({
-        type: APPLICATION_ERROR,
-      });
-
-      return Promise.reject();
-    }
-  );
+export const getTransactionsData = () => async (dispatch) => {
+  try {
+    const res = await HomeService.getTransactionsData();
+    dispatch({
+      type: SET_TRANSACTIONS_DATA,
+      payload: { transactionsData: res.data.success },
+    });
+    return await Promise.resolve();
+  } catch (error) {
+    alertify.error(error.toString() || "APPLICATION ERROR!");
+    return await Promise.reject();
+  }
 };
 
 export const createNewTransaction = (transactionData) => async (dispatch) => {
@@ -35,9 +28,10 @@ export const createNewTransaction = (transactionData) => async (dispatch) => {
     dispatch({
       type: CLOSE_ADD_TRANSACTION_DIALOG,
     });
-    return await Promise.resolve();
+    return Promise.resolve();
   } catch (error) {
     alertify.error(error.toString() || "APPLICATION ERROR!");
+    return Promise.reject();
   }
 };
 
