@@ -5,6 +5,7 @@ import {
   OPEN_ADD_TRANSACTION_DIALOG,
   CLOSE_ADD_TRANSACTION_DIALOG,
   SET_GRAPH_DATA,
+  SET_GRAPH_OPTION,
 } from "../actions/types";
 
 import sideNavigationItems from "../tack/sideNavigationItems";
@@ -55,6 +56,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         graphData: payload.data,
+      };
+
+    case SET_GRAPH_OPTION:
+      return {
+        ...state,
+        selectedGraphOption: payload.id,
       };
 
     default:

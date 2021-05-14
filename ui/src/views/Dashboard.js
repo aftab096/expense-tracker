@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 
-import { getTopCategoriesData, getDataForGraph } from "../actions/dashboard";
+import { getTopCategoriesData, getDataForGraph, changeGraphOption } from "../actions/dashboard";
 import GraphContainerView from "./graph-container-view";
 import graphOptions from "../tack/graphOptions";
 
@@ -16,7 +16,8 @@ const Dashboard = () => {
   }, []);
 
   const handleGraphOptionChanged = (optionId) => {
-    console.log(optionId);
+    dispatch(changeGraphOption(optionId));
+    dispatch(getDataForGraph(optionId));
   }
 
   const getTopCategoriesView = () => {

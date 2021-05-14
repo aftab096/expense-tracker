@@ -46,7 +46,7 @@ router.post("/graph", async (req, res) => {
   endOfDay.setHours(0, 0, 0, 0);
   const endofDayTimestamp = endOfDay.valueOf();
   let startDayTimestamp = new Date(endOfDay)
-    .setDate(endOfDay.getDate() - duration + 1)
+    .setDate(endOfDay.getDate() - duration)
     .valueOf();
 
   const offset = getOffsetValueFromDuration(duration);
@@ -66,9 +66,9 @@ router.post("/graph", async (req, res) => {
     "Nov",
     "Dec",
   ];
-  for (let i = startDayTimestamp; i <= endofDayTimestamp; ) {
-    const from = startDayTimestamp - day * offset;
-    const to = i;
+  for (let i = startDayTimestamp; i < endofDayTimestamp; ) {
+    const from = i;
+    const to = startDayTimestamp + day * offset;
     const fromDate = new Date(from);
     const toDate = new Date(to);
 

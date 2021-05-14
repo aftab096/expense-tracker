@@ -1,6 +1,5 @@
 import axios from "axios";
-
-import api_constants from '../constants/api-constants';
+import api_constants from '../tack/constants/api-constants';
 
 const register = (registerData) => {
   return axios.post(api_constants.BASE_PATH + api_constants.REGISTER_USER, registerData);

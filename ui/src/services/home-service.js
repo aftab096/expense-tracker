@@ -1,5 +1,5 @@
 import axios from "axios";
-import api_constants from "../constants/api-constants";
+import api_constants from "../tack/constants/api-constants";
 import authHeader from "./auth-header";
 
 const getTransactionsData = () => {

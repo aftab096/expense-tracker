@@ -1,4 +1,4 @@
-import { SET_TOP_CATEGORIES_DATA, SET_GRAPH_DATA } from "./types";
+import { SET_TOP_CATEGORIES_DATA, SET_GRAPH_DATA, SET_GRAPH_OPTION } from "./types";
 
 import HomeService from "../services/home-service";
 import homeUtils from "../utils/home-utils";
@@ -49,3 +49,10 @@ export const getDataForGraph = (optionId) => async (dispatch) => {
     return await Promise.reject();
   }
 };
+
+export const changeGraphOption = (optionId) => (dispatch) =>{
+  dispatch({
+    type: SET_GRAPH_OPTION,
+    payload: { id: optionId },
+  });
+}
