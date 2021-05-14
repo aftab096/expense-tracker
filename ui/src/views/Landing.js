@@ -9,12 +9,10 @@ const Landing = () => {
     UserService.getPublicContent().then(
       (response) => {
         setContent(response.data);
-      },
-      (error) => {
+      })
+      .catch((error) => {
         const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
+          (error.response?.data?.message) || error.message || "Unknown Error";
 
         setContent(_content);
       }

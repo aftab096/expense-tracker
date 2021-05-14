@@ -4,6 +4,7 @@ import {
   SET_TRANSACTIONS_DATA,
   OPEN_ADD_TRANSACTION_DIALOG,
   CLOSE_ADD_TRANSACTION_DIALOG,
+  SET_GRAPH_DATA,
 } from "../actions/types";
 
 import sideNavigationItems from "../tack/sideNavigationItems";
@@ -12,6 +13,8 @@ const initialState = {
   selectedItemId: sideNavigationItems[0].id,
   transactionsData: [],
   isDialogOpen: false,
+  selectedGraphOption: "",
+  graphData: [],
 };
 
 export default function (state = initialState, action) {
@@ -42,10 +45,16 @@ export default function (state = initialState, action) {
         isDialogOpen: true,
       };
 
-      case CLOSE_ADD_TRANSACTION_DIALOG:
+    case CLOSE_ADD_TRANSACTION_DIALOG:
       return {
         ...state,
         isDialogOpen: false,
+      };
+
+    case SET_GRAPH_DATA:
+      return {
+        ...state,
+        graphData: payload.data,
       };
 
     default:

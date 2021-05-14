@@ -39,4 +39,82 @@ router.get("/topcategories", (req, res) => {
   });
 });
 
+router.post("/graph", async (req, res) => {
+  const duration = req.body.duration;
+  const endOfDay = new Date();
+  endOfDay.setDate(endOfDay.getDate() + 1);
+  endOfDay.setHours(0, 0, 0, 0);
+  const endofDayTimestamp = endOfDay.valueOf();
+  let startDayTimestamp = new Date(endOfDay)
+    .setDate(endOfDay.getDate() - duration + 1)
+    .valueOf();
+
+  const offset = getOffsetValueFromDuration(duration);
+  const day = 86400000;
+  let data = [];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  for (let i = startDayTimestamp; i <= endofDayTimestamp; ) {
+    const from = startDayTimestamp - day * offset;
+    const to = i;
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+
+    const range = `${fromDate.getDate()} ${
+      months[fromDate.getMonth() - 1]
+    } - ${toDate.getDate()} ${months[toDate.getMonth() - 1]}`;
+
+    const query = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE type = 'debit' AND
+    datetime BETWEEN ${from} AND ${to}`;
+
+    try {
+      const amount = await fetchDataForGraph(query);
+      data.push({
+        x: range,
+        y: amount,
+      });
+    } catch (err) {
+      res.status(500).json(err.stack);
+    }
+
+    startDayTimestamp = startDayTimestamp + day * offset;
+    i = startDayTimestamp;
+  }
+  res.json({ success: data });
+});
+
+const fetchDataForGraph = async (query) => {
+  return new Promise((resolve, reject) => {
+    connection.query(query, (err, result) => {
+      if (err) return reject(err);
+      resolve(result[0]?.amount || 0);
+    });
+  });
+};
+
+const getOffsetValueFromDuration = (duration) => {
+  switch (duration) {
+    case 7:
+      return 1;
+
+    case 30:
+      return 5;
+
+    case 90:
+      return 15;
+  }
+};
+
 module.exports = router;

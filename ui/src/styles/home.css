@@ -180,7 +180,7 @@
 .food {
   background-image: url("./icons/dish.svg");
 }
-.gift {
+.gift, .gift_r {
   background-image: url("./icons/gift-box.svg");
 }
 .fashion {

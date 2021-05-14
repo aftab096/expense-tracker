@@ -5,6 +5,7 @@ const api_constants = {
   GET_ALL_TRANSACTIONS: "transactions/",
   TRANSACTION: "transaction/",
   GET_TOP_CATEGORIES: "topcategories/",
+  GRAPH: "graph/",
 };
 
 export default api_constants;

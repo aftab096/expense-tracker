@@ -1,0 +1,17 @@
+.graphContainer {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+.graphHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.graphHeaderRightSection {
+  opacity: 0.5;
+  font-weight: 500;
+}
+.graphOption {
+    font-size: 0.8em;
+    margin-right: 10px;
+}

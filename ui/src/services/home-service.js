@@ -27,8 +27,15 @@ const getTopCategoriesData = () => {
   });
 };
 
+const getDataForGraph = (postData) => {
+  return axios.post(api_constants.BASE_PATH + api_constants.GRAPH, postData, {
+    headers: authHeader(),
+  });
+};
+
 export default {
   getTransactionsData,
   createTransaction,
   getTopCategoriesData,
+  getDataForGraph,
 };

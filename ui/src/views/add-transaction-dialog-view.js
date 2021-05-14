@@ -11,7 +11,7 @@ import {
   createNewTransaction,
   getTransactionsData,
 } from "../actions/transactions";
-import { getTopCategoriesData } from "../actions/dashboard";
+import { getTopCategoriesData, getDataForGraph } from "../actions/dashboard";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
 const AddTransactionDialogView = (props) => {
@@ -85,10 +85,14 @@ const AddTransactionDialogView = (props) => {
             type: homeUtils.getTransactionTypeFromCategory(category),
             userId: currentUser.userId,
           };
-          dispatch(createNewTransaction(translationData))
-            .then(() => dispatch(getTransactionsData()))
-            .then(() => dispatch(getTopCategoriesData()))
-            .then(() => handleDialogClose());
+          // dispatch(loading()) /**TODO: Implement loader */
+          dispatch(createNewTransaction(translationData)).then(() => {
+            dispatch(getTransactionsData());
+            dispatch(getTopCategoriesData());
+            dispatch(getDataForGraph());
+            dispatch(closeDialog());
+          });
+          // .then(() => dispatch(StopLoader()))
         }
         break;
 
@@ -96,6 +100,8 @@ const AddTransactionDialogView = (props) => {
         break;
     }
   };
+
+  const debouncedHandleButtonClicked = _.debounce(handleButtonClicked, 500);
 
   const categoryChipsView = _.map(categoriesData, (data) => {
     let wrapperClassName = "categoryChipWrapper ";
@@ -206,7 +212,7 @@ const AddTransactionDialogView = (props) => {
         title={"Add a New Transaction"}
         buttonsData={dialogButtons}
         onClose={handleDialogClose}
-        buttonClickHandler={handleButtonClicked}
+        buttonClickHandler={debouncedHandleButtonClicked}
       >
         {addTransactionForm}
       </DialogView>
