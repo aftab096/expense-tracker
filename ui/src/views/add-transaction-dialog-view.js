@@ -19,6 +19,7 @@ const AddTransactionDialogView = (props) => {
   const [amount, setAmount] = useState();
   const [datetime, setDatetime] = useState();
   const [category, setCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [emptyFields, setEmptyFields] = useState();
 
@@ -59,6 +60,7 @@ const AddTransactionDialogView = (props) => {
       if (!category) emptyFields.push("category");
       setEmptyFields(emptyFields);
       alertify.error("Please fill the required fields");
+      setIsLoading(false);
     }
   };
 
@@ -76,6 +78,7 @@ const AddTransactionDialogView = (props) => {
         break;
 
       case "save":
+        setIsLoading(true);
         if (validateFormData()) {
           const translationData = {
             desc,
@@ -85,14 +88,14 @@ const AddTransactionDialogView = (props) => {
             type: homeUtils.getTransactionTypeFromCategory(category),
             userId: currentUser.userId,
           };
-          // dispatch(loading()) /**TODO: Implement loader */
-          dispatch(createNewTransaction(translationData)).then(() => {
-            dispatch(getTransactionsData());
-            dispatch(getTopCategoriesData());
-            dispatch(getDataForGraph());
-            dispatch(closeDialog());
-          });
-          // .then(() => dispatch(StopLoader()))
+          dispatch(createNewTransaction(translationData))
+            .then(() => {
+              dispatch(getTransactionsData());
+              dispatch(getTopCategoriesData());
+              dispatch(getDataForGraph());
+              dispatch(closeDialog());
+            })
+            .then(() => setIsLoading(false));
         }
         break;
 
@@ -100,8 +103,6 @@ const AddTransactionDialogView = (props) => {
         break;
     }
   };
-
-  const debouncedHandleButtonClicked = _.debounce(handleButtonClicked, 500);
 
   const categoryChipsView = _.map(categoriesData, (data) => {
     let wrapperClassName = "categoryChipWrapper ";
@@ -212,7 +213,8 @@ const AddTransactionDialogView = (props) => {
         title={"Add a New Transaction"}
         buttonsData={dialogButtons}
         onClose={handleDialogClose}
-        buttonClickHandler={debouncedHandleButtonClicked}
+        buttonClickHandler={handleButtonClicked}
+        isLoading={isLoading}
       >
         {addTransactionForm}
       </DialogView>

@@ -4,6 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import _ from "lodash";
+import ReactLoading from "react-loading";
 
 import "../styles/library-views.css";
 
@@ -87,6 +88,14 @@ const DialogView = (props) => {
   const bodyStyleFromProps = _.assign(bodyStyle, props.bodyStyle);
   const { classes } = props;
 
+  const getLoaderView = () => {
+    return (
+      <div className="loaderContainer">
+        <ReactLoading type="bubbles" color="#111" />
+      </div>
+    );
+  };
+
   return (
     <Dialog
       disableBackdropClick={props.modal}
@@ -99,7 +108,9 @@ const DialogView = (props) => {
       bodyclassname={props.bodyClassName}
       PaperProps={{ style: style }}
     >
+      {props.isLoading && getLoaderView()}
       {dialogTitle}
+      {props.isLoading && getLoaderView()}
       <DialogContent
         className={props.contentClassName}
         style={bodyStyleFromProps}

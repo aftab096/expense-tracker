@@ -1,24 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 
-import { getTopCategoriesData, getDataForGraph, changeGraphOption } from "../actions/dashboard";
+import {
+  getTopCategoriesData,
+  getDataForGraph,
+  changeGraphOption,
+} from "../actions/dashboard";
 import GraphContainerView from "./graph-container-view";
 import graphOptions from "../tack/graphOptions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { topCategoriesData, selectedGraphOption, graphData, totalExpense} = useSelector((state) => state.home);
+  const [isLoading, setIsLoading] = useState(false);
+  const { topCategoriesData, selectedGraphOption, graphData, totalExpense } =
+    useSelector((state) => state.home);
 
   useEffect(() => {
+    setIsLoading(true);
     dispatch(getTopCategoriesData());
-    dispatch(getDataForGraph(selectedGraphOption))
+    dispatch(getDataForGraph(selectedGraphOption)).then(() =>
+      setIsLoading(false)
+    );
   }, []);
+
+  const graphHeaderRightSection = `Total expense: ₹${totalExpense}`;
 
   const handleGraphOptionChanged = (optionId) => {
     dispatch(changeGraphOption(optionId));
     dispatch(getDataForGraph(optionId));
-  }
+  };
 
   const getTopCategoriesView = () => {
     let topCategoriesCards = [];
@@ -45,10 +57,17 @@ const Dashboard = () => {
     );
   };
 
-  const graphHeaderRightSection = `Total expense: ₹${totalExpense}`;
+  const getLoaderView = () => {
+    return (
+      <div className="loaderContainer">
+        <ReactLoading type="bubbles" color="#111" />
+      </div>
+    );
+  };
 
   return (
     <div className="dashboardContainer">
+      {isLoading && getLoaderView()}
       {getTopCategoriesView()}
       <GraphContainerView
         graphOptions={graphOptions}
