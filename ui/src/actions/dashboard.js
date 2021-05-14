@@ -1,4 +1,8 @@
-import { SET_TOP_CATEGORIES_DATA, SET_GRAPH_DATA, SET_GRAPH_OPTION } from "./types";
+import {
+  SET_TOP_CATEGORIES_DATA,
+  SET_GRAPH_DATA,
+  SET_GRAPH_OPTION,
+} from "./types";
 
 import HomeService from "../services/home-service";
 import homeUtils from "../utils/home-utils";
@@ -34,15 +38,18 @@ export const getDataForGraph = (optionId) => async (dispatch) => {
     const duration = _.find(graphOptions, { id: optionId }).duration;
     const postData = { duration };
     const res = await HomeService.getDataForGraph(postData);
-    const data = [{
-      id: "Expenses",
-      color: "hsl(135, 70%, 50%)",
-      data: res.data.success,
-    }];
+    const data = [
+      {
+        id: "Expenses",
+        color: "hsl(135, 70%, 50%)",
+        data: res.data.success,
+      },
+    ];
+    const totalExpense = res.data.totalExpense;
 
     dispatch({
       type: SET_GRAPH_DATA,
-      payload: { data: data },
+      payload: { data, totalExpense },
     });
   } catch (error) {
     alertify.error(error.toString() || "APPLICATION ERROR!");
@@ -50,9 +57,9 @@ export const getDataForGraph = (optionId) => async (dispatch) => {
   }
 };
 
-export const changeGraphOption = (optionId) => (dispatch) =>{
+export const changeGraphOption = (optionId) => (dispatch) => {
   dispatch({
     type: SET_GRAPH_OPTION,
     payload: { id: optionId },
   });
-}
+};

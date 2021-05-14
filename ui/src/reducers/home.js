@@ -16,6 +16,7 @@ const initialState = {
   isDialogOpen: false,
   selectedGraphOption: "",
   graphData: [],
+  totalExpense: 0,
 };
 
 export default function (state = initialState, action) {
@@ -56,6 +57,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         graphData: payload.data,
+        totalExpense: payload.totalExpense,
       };
 
     case SET_GRAPH_OPTION:

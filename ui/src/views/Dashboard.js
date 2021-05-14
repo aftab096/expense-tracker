@@ -8,7 +8,7 @@ import graphOptions from "../tack/graphOptions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { topCategoriesData, selectedGraphOption, graphData} = useSelector((state) => state.home);
+  const { topCategoriesData, selectedGraphOption, graphData, totalExpense} = useSelector((state) => state.home);
 
   useEffect(() => {
     dispatch(getTopCategoriesData());
@@ -45,8 +45,7 @@ const Dashboard = () => {
     );
   };
 
-  const totalCost = 9000;
-  const graphHeaderRightSection = `Total expense: ₹${totalCost}`;
+  const graphHeaderRightSection = `Total expense: ₹${totalExpense}`;
 
   return (
     <div className="dashboardContainer">

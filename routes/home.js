@@ -51,7 +51,12 @@ router.post("/graph", async (req, res) => {
 
   const offset = getOffsetValueFromDuration(duration);
   const day = 86400000;
+
+  // const totalExpenseQuery = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE type = 'debit' AND
+  //   datetime BETWEEN ${startDayTimestamp} AND ${endofDayTimestamp}`
+
   let data = [];
+  let totalExpense = 0;
   const months = [
     "Jan",
     "Feb",
@@ -85,6 +90,7 @@ router.post("/graph", async (req, res) => {
         x: range,
         y: amount,
       });
+      totalExpense += amount;
     } catch (err) {
       res.status(500).json(err.stack);
     }
@@ -92,7 +98,7 @@ router.post("/graph", async (req, res) => {
     startDayTimestamp = startDayTimestamp + day * offset;
     i = startDayTimestamp;
   }
-  res.json({ success: data });
+  res.json({ success: data, totalExpense: totalExpense });
 });
 
 const fetchDataForGraph = async (query) => {
