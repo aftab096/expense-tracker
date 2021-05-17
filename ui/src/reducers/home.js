@@ -6,6 +6,7 @@ import {
   CLOSE_ADD_TRANSACTION_DIALOG,
   SET_GRAPH_DATA,
   SET_GRAPH_OPTION,
+  SET_TABLE_DATA,
 } from "../actions/types";
 
 import sideNavigationItems from "../tack/sideNavigationItems";
@@ -17,6 +18,7 @@ const initialState = {
   selectedGraphOption: "",
   graphData: [],
   totalExpense: 0,
+  tableData: [],
 };
 
 export default function (state = initialState, action) {
@@ -64,6 +66,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         selectedGraphOption: payload.id,
+      };
+
+    case SET_TABLE_DATA:
+      return {
+        ...state,
+        tableData: payload.tableData,
       };
 
     default:

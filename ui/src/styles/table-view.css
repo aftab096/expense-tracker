@@ -1,0 +1,11 @@
+.tableViewContainer {
+  height: 100%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  background-color: #fff;
+}
+.tableCellIconsContainer {
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.7;
+}

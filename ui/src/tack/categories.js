@@ -40,6 +40,11 @@ const categoriesData = [
     type: "debit",
   },
   {
+    id: "electronics_acc",
+    label: "Electronics & Accessories",
+    type: "debit",
+  },
+  {
     id: "gift",
     label: "Gift",
     type: "debit",

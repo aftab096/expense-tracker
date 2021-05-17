@@ -1,15 +1,17 @@
 import React from "react";
 import _ from "lodash";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import "../styles/home.css";
 import sideNavigationItems from "../tack/sideNavigationItems";
+import { setSelectedItemId } from "../actions/home";
 
 const SidebarNavigationView = () => {
   const { selectedItemId: selectedItemId } = useSelector((state) => state.home);
+  const dispatch = useDispatch();
 
   const handleSidebarNavigationItemClicked = (itemId) => {
-    console.log(itemId);
+    dispatch(setSelectedItemId(itemId));
   };
 
   const getSidebarNavigationView = () => {

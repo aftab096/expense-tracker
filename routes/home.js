@@ -123,4 +123,17 @@ const getOffsetValueFromDuration = (duration) => {
   }
 };
 
+router.post("/transactionlist", (req, res) => {
+  const transactionType = req.body.transactionType;
+
+  const query = `SELECT * FROM ${tableNameCosntants.TRANSACTIONS} WHERE type = '${transactionType}' ORDER BY datetime DESC`;
+
+  connection.query(query, (err, result) => {
+    if (err) res.status(500).json(err.stack);
+    else {
+      res.json({ success: result });
+    }
+  });
+});
+
 module.exports = router;

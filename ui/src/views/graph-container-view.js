@@ -79,7 +79,8 @@ const GraphContainerView = (props) => {
             legendPosition: "middle",
           }}
           dotSize={10}
-          curve="cardinal"
+          curve="monotoneX"
+          enableSlices= 'x'
           pointSize={10}
           pointColor="white"
           pointBorderWidth={2}
