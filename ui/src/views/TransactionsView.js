@@ -42,7 +42,7 @@ const TransactionsView = () => {
     );
   };
 
-  const getTransactionsViewView = () => {
+  const getTransactionsView = () => {
     let transactionsView = [];
     _.forEach(transactionsData, (data) => {
       let categoryIconClassName = `categoryIcon ${data.category}`;
@@ -102,7 +102,7 @@ const TransactionsView = () => {
       {isLoading && getLoaderView()}
       {getTransactionsHeaderView()}
       <div className="transactionsViewMainContainer">
-        {getTransactionsViewView()}
+        {getTransactionsView()}
       </div>
       {getAddTransactionView()}
       {isDialogOpen && getAddTransactionDialogView()}

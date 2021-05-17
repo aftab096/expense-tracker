@@ -16,8 +16,15 @@ const getTimestampValueFromString = (datetimeString) => {
   return null;
 };
 
+const getDatetimeInReadableFormat = (timestamp) => {
+  if (isNaN(timestamp)) return null;
+  const date = new Date(timestamp);
+  return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+};
+
 export default {
   getTransactionTypeFromCategory,
   getTimestampValueFromString,
   getLabelFromCategory,
+  getDatetimeInReadableFormat,
 };

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 import { setTableData } from "../actions/home";
 import "../styles/table-view.css";
@@ -17,13 +17,13 @@ import {
 } from "@material-ui/core/";
 
 const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-    container: {
-      maxHeight: '100%',
-    },
-  });
+  root: {
+    width: "100%",
+  },
+  container: {
+    maxHeight: "100%",
+  },
+});
 
 const TableView = ({ headers }) => {
   const dispatch = useDispatch();
@@ -81,13 +81,11 @@ const TableView = ({ headers }) => {
             </TableRow>
           </TableHead>
 
-          {/* <div className="tableBodyWrapper"> */}
-            <TableBody>
-              {tableData.map((row) => {
-                return getRow(row);
-              })}
-            </TableBody>
-          {/* </div> */}
+          <TableBody>
+            {tableData.map((row) => {
+              return getRow(row);
+            })}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>
