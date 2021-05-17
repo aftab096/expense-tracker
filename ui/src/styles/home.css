@@ -192,6 +192,19 @@
 .health {
   background-image: url("./icons/drugs.svg");
 }
+.entertainment {
+  background-image: url("./icons/home-entertainment-system.svg");
+}
+.electronics_acc {
+  background-image: url("./icons/appliance.svg");
+}
+.charity {
+  background-image: url("./icons/love.svg");
+}
+.other_debit, .other_income {
+  background-image: url("./icons/file.svg");
+}
+
 .transactionLabel {
   margin-left: 10px;
   flex: 10;
