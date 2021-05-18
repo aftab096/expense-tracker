@@ -10,8 +10,8 @@ import {
   closeDialog,
   createNewTransaction,
   getTransactionsData,
-} from "../actions/transactions";
-import { getTopCategoriesData, getDataForGraph } from "../actions/dashboard";
+} from "../actions/transactions-action";
+import { getTopCategoriesData, getDataForGraph } from "../actions/dashboard-action";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
 const AddTransactionDialogView = (props) => {

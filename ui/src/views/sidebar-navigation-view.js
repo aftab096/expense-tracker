@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import "../styles/home.css";
 import sideNavigationItems from "../tack/sideNavigationItems";
-import { setSelectedItemId } from "../actions/home";
+import { setSelectedItemId } from "../actions/home-action";
 
 const SidebarNavigationView = () => {
   const { selectedItemId: selectedItemId } = useSelector((state) => state.home);

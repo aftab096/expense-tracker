@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 
 import tableHeaders from "../tack/data-table-headers";
 import "../styles/home.css";
-import SidebarNavigationView from "./SidebarNavigationView";
-import TransactionsView from "./TransactionsView";
-import Dashboard from "./Dashboard";
+import SidebarNavigationView from "./sidebar-navigation-view";
+import TransactionsView from "./transactions-view";
+import Dashboard from "./dashboard-view";
 import TableView from "./table-view";
 
 const Home = () => {

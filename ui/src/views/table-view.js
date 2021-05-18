@@ -4,7 +4,7 @@ import EditIcon from "@material-ui/icons/EditOutlined";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { setTableData } from "../actions/home";
+import { setTableData } from "../actions/home-action";
 import "../styles/table-view.css";
 
 import {

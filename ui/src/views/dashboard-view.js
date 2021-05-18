@@ -7,7 +7,7 @@ import {
   getTopCategoriesData,
   getDataForGraph,
   changeGraphOption,
-} from "../actions/dashboard";
+} from "../actions/dashboard-action";
 import GraphContainerView from "./graph-container-view";
 import graphOptions from "../tack/graphOptions";
 

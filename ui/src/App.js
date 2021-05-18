@@ -5,14 +5,14 @@ import { Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import Login from "./views/Login";
-import Register from "./views/Register";
-import Landing from "./views/Landing";
-import Profile from "./views/Profile";
-import Home from "./views/Home";
+import Login from "./views/login-view";
+import Register from "./views/register-view";
+import Landing from "./views/landing-view";
+import Profile from "./views/profile-view";
+import Home from "./views/home-view";
 
-import { logout } from "./actions/auth";
-import { clearMessage } from "./actions/message";
+import { logout } from "./actions/auth-action";
+import { clearMessage } from "./actions/message-action";
 
 import { history } from "./helpers/history";
 

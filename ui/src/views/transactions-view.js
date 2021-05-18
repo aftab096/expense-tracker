@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactLoading from "react-loading";
 
-import { getTransactionsData } from "../actions/transactions";
+import { getTransactionsData } from "../actions/transactions-action";
 import AddTransactionDialogView from "./add-transaction-dialog-view";
 
-import { openDialog } from "../actions/transactions";
+import { openDialog } from "../actions/transactions-action";
 
 const TransactionsView = () => {
   const dispatch = useDispatch();

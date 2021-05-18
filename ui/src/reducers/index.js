@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import auth from "./auth";
-import message from "./message";
-import home from "./home";
+import auth from "./auth-reducer";
+import message from "./message-reducer";
+import home from "./home-reducer";
 
 export default combineReducers({
   auth,
