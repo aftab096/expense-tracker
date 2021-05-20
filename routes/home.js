@@ -78,8 +78,8 @@ router.post("/graph", async (req, res) => {
     const toDate = new Date(to);
 
     const range = `${fromDate.getDate()} ${
-      months[fromDate.getMonth() - 1]
-    } - ${toDate.getDate()} ${months[toDate.getMonth() - 1]}`;
+      months[fromDate.getMonth()]
+    } - ${toDate.getDate()} ${months[toDate.getMonth()]}`;
 
     const query = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE type = 'debit' AND
     datetime BETWEEN ${from} AND ${to}`;
