@@ -20,6 +20,11 @@ const categoriesData = [
     type: "debit",
   },
   {
+    id: "groceries",
+    label: "Groceries",
+    type: "debit",
+  },
+  {
     id: "care",
     label: "Personal care",
     type: "debit",
