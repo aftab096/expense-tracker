@@ -18,7 +18,7 @@ export const setTableData = (selectedItemId) => async (dispatch) => {
     tableData = tableData.map(row => {
       row.amount = `₹${row.amount}`;
       row.datetime = HomeUtils.getDatetimeInReadableFormat(row.datetime);
-      row.category = HomeUtils.getLabelFromCategory(row.category);
+      // row.category = HomeUtils.getLabelFromCategory(row.category);
       return row;
     })
     dispatch({

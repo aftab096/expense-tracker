@@ -21,4 +21,22 @@ router.post("/", (req, res) => {
   });
 });
 
+router.put("/", (req, res) => {
+  const { t_id, desc, amount, datetime, category, type, userId } = req.body;
+
+  const query = `UPDATE ${tableNameCosntants.TRANSACTIONS}
+            SET description = '${desc}', 
+            amount = ${amount}, 
+            datetime = ${datetime}, 
+            category = '${category}', 
+            type ='${type}'
+            WHERE user_id = '${userId}' AND t_id = '${t_id}'`;
+
+  console.log(query);
+  connection.query(query, (err, result) => {
+    if (err) res.status(500).json({ error: err.stack });
+    else res.json({ success: "Transaction Saved Successfully" });
+  });
+});
+
 module.exports = router;

@@ -21,6 +21,16 @@ const createTransaction = (transactionData) => {
   );
 };
 
+const saveTransaction = (transactionData, t_id) => {
+  return axios.put(
+    api_constants.BASE_PATH + api_constants.TRANSACTION,
+    {...transactionData, t_id},
+    {
+      headers: authHeader(),
+    }
+  );
+};
+
 const getTopCategoriesData = () => {
   return axios.get(api_constants.BASE_PATH + api_constants.GET_TOP_CATEGORIES, {
     headers: authHeader(),
@@ -49,4 +59,5 @@ export default {
   getTopCategoriesData,
   getDataForGraph,
   getDataForTable,
+  saveTransaction,
 };

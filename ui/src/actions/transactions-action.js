@@ -35,6 +35,20 @@ export const createNewTransaction = (transactionData) => async (dispatch) => {
   }
 };
 
+export const saveTransaction = (transactionData, t_id) => async (dispatch) => {
+  try {
+    const res = await HomeService.saveTransaction(transactionData, t_id);
+    alertify.success(res.data.success);
+    dispatch({
+      type: CLOSE_ADD_TRANSACTION_DIALOG,
+    });
+    return Promise.resolve();
+  } catch (error) {
+    alertify.error(error.toString() || "APPLICATION ERROR!");
+    return Promise.reject();
+  }
+};
+
 export const openDialog = () => (dispatch) => {
   dispatch({
     type: OPEN_ADD_TRANSACTION_DIALOG,

@@ -3,14 +3,23 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactLoading from "react-loading";
 
-import { getTransactionsData } from "../actions/transactions-action";
-import AddTransactionDialogView from "./add-transaction-dialog-view";
-
-import { openDialog } from "../actions/transactions-action";
+import AddTransactionDialogView from "./transaction-dialog-view";
+import {
+  openDialog,
+  createNewTransaction,
+  getTransactionsData,
+  closeDialog,
+} from "../actions/transactions-action";
+import {
+  getTopCategoriesData,
+  getDataForGraph,
+} from "../actions/dashboard-action";
 
 const TransactionsView = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [isAddTransactionDialogOpen, setIsAddTransactionDialogOpen] =
+    useState();
   const { transactionsData, isDialogOpen } = useSelector((state) => state.home);
 
   useEffect(() => {
@@ -23,7 +32,23 @@ const TransactionsView = () => {
   };
 
   const handleAddTransaction = () => {
+    setIsAddTransactionDialogOpen(true);
     dispatch(openDialog());
+  };
+
+  const handleDialogClosed = () => {
+    setIsAddTransactionDialogOpen(false);
+  };
+
+  const hanleCreateTransaction = async (transactionData) => {
+    dispatch(createNewTransaction(transactionData)).then(() => {
+      dispatch(getTransactionsData());
+      dispatch(getTopCategoriesData());
+      dispatch(getDataForGraph());
+      dispatch(closeDialog());
+    });
+
+    return Promise.resolve();
   };
 
   const getDateAndTime = (timestamp) => {
@@ -86,7 +111,13 @@ const TransactionsView = () => {
   };
 
   const getAddTransactionDialogView = () => {
-    return <AddTransactionDialogView open={isDialogOpen} />;
+    return (
+      <AddTransactionDialogView
+        open={isDialogOpen}
+        onSaveHandler={hanleCreateTransaction}
+        onCloseHandler={handleDialogClosed}
+      />
+    );
   };
 
   const getLoaderView = () => {
@@ -105,7 +136,9 @@ const TransactionsView = () => {
         {getTransactionsView()}
       </div>
       {getAddTransactionView()}
-      {isDialogOpen && getAddTransactionDialogView()}
+      {isDialogOpen &&
+        isAddTransactionDialogOpen &&
+        getAddTransactionDialogView()}
     </div>
   );
 };

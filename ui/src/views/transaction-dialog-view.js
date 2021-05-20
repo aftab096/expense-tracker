@@ -11,14 +11,17 @@ import {
   createNewTransaction,
   getTransactionsData,
 } from "../actions/transactions-action";
-import { getTopCategoriesData, getDataForGraph } from "../actions/dashboard-action";
+import {
+  getTopCategoriesData,
+  getDataForGraph,
+} from "../actions/dashboard-action";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
-const AddTransactionDialogView = (props) => {
-  const [desc, setDesc] = useState("");
-  const [amount, setAmount] = useState();
-  const [datetime, setDatetime] = useState();
-  const [category, setCategory] = useState("");
+const TransactionDialogView = (props) => {
+  const [desc, setDesc] = useState(props.desc || "");
+  const [amount, setAmount] = useState(props.amount || "");
+  const [datetime, setDatetime] = useState(props.datetime || "");
+  const [category, setCategory] = useState(props.category || "");
   const [isLoading, setIsLoading] = useState(false);
 
   const [emptyFields, setEmptyFields] = useState();
@@ -47,6 +50,7 @@ const AddTransactionDialogView = (props) => {
   };
 
   const handleDialogClose = () => {
+    props.onCloseHandler?.();
     dispatch(closeDialog());
   };
 
@@ -80,7 +84,7 @@ const AddTransactionDialogView = (props) => {
       case "save":
         setIsLoading(true);
         if (validateFormData()) {
-          const translationData = {
+          const transactionData = {
             desc,
             amount,
             datetime: homeUtils.getTimestampValueFromString(datetime),
@@ -88,14 +92,12 @@ const AddTransactionDialogView = (props) => {
             type: homeUtils.getTransactionTypeFromCategory(category),
             userId: currentUser.userId,
           };
-          dispatch(createNewTransaction(translationData))
-            .then(() => {
-              dispatch(getTransactionsData());
-              dispatch(getTopCategoriesData());
-              dispatch(getDataForGraph());
-              dispatch(closeDialog());
-            })
-            .then(() => setIsLoading(false));
+
+          if (_.isFunction(props.onSaveHandler)) {
+            props.onSaveHandler(transactionData, props.id);
+          } else {
+            setIsLoading(false);
+          }
         }
         break;
 
@@ -222,4 +224,4 @@ const AddTransactionDialogView = (props) => {
   );
 };
 
-export default AddTransactionDialogView;
+export default TransactionDialogView;
