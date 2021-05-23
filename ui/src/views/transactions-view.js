@@ -5,10 +5,8 @@ import ReactLoading from "react-loading";
 
 import AddTransactionDialogView from "./transaction-dialog-view";
 import {
-  openDialog,
   createNewTransaction,
   getTransactionsData,
-  closeDialog,
 } from "../actions/transactions-action";
 import {
   getTopCategoriesData,
@@ -20,7 +18,7 @@ const TransactionsView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAddTransactionDialogOpen, setIsAddTransactionDialogOpen] =
     useState();
-  const { transactionsData, isDialogOpen } = useSelector((state) => state.home);
+  const { transactionsData } = useSelector((state) => state.home);
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,7 +31,6 @@ const TransactionsView = () => {
 
   const handleAddTransaction = () => {
     setIsAddTransactionDialogOpen(true);
-    dispatch(openDialog());
   };
 
   const handleDialogClosed = () => {
@@ -45,7 +42,7 @@ const TransactionsView = () => {
       dispatch(getTransactionsData());
       dispatch(getTopCategoriesData());
       dispatch(getDataForGraph());
-      dispatch(closeDialog());
+      setIsAddTransactionDialogOpen(false);
     });
 
     return Promise.resolve();
@@ -113,7 +110,7 @@ const TransactionsView = () => {
   const getAddTransactionDialogView = () => {
     return (
       <AddTransactionDialogView
-        open={isDialogOpen}
+        open={isAddTransactionDialogOpen}
         onSaveHandler={hanleCreateTransaction}
         onCloseHandler={handleDialogClosed}
       />
@@ -136,9 +133,7 @@ const TransactionsView = () => {
         {getTransactionsView()}
       </div>
       {getAddTransactionView()}
-      {isDialogOpen &&
-        isAddTransactionDialogOpen &&
-        getAddTransactionDialogView()}
+      {isAddTransactionDialogOpen && getAddTransactionDialogView()}
     </div>
   );
 };

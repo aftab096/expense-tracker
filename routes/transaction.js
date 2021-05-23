@@ -39,4 +39,13 @@ router.put("/", (req, res) => {
   });
 });
 
+router.delete("/:id", (req,res) => {
+  const t_id = req.params.id;
+  const query = `DELETE FROM ${tableNameCosntants.TRANSACTIONS} WHERE t_id = '${t_id}'`;
+  connection.query(query, (err, result) => {
+    if(err) res.status(500).json({ error : err.stack});
+    else res.json({success: t_id});
+  })
+});
+
 module.exports = router;

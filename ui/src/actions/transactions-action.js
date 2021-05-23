@@ -1,7 +1,5 @@
 import {
   SET_TRANSACTIONS_DATA,
-  OPEN_ADD_TRANSACTION_DIALOG,
-  CLOSE_ADD_TRANSACTION_DIALOG,
 } from "./types";
 
 import HomeService from "../services/home-service";
@@ -25,9 +23,6 @@ export const createNewTransaction = (transactionData) => async (dispatch) => {
   try {
     const res = await HomeService.createTransaction(transactionData);
     alertify.success(res.data.success);
-    dispatch({
-      type: CLOSE_ADD_TRANSACTION_DIALOG,
-    });
     return Promise.resolve();
   } catch (error) {
     alertify.error(error.toString() || "APPLICATION ERROR!");
@@ -39,24 +34,9 @@ export const saveTransaction = (transactionData, t_id) => async (dispatch) => {
   try {
     const res = await HomeService.saveTransaction(transactionData, t_id);
     alertify.success(res.data.success);
-    dispatch({
-      type: CLOSE_ADD_TRANSACTION_DIALOG,
-    });
     return Promise.resolve();
   } catch (error) {
     alertify.error(error.toString() || "APPLICATION ERROR!");
     return Promise.reject();
   }
-};
-
-export const openDialog = () => (dispatch) => {
-  dispatch({
-    type: OPEN_ADD_TRANSACTION_DIALOG,
-  });
-};
-
-export const closeDialog = () => (dispatch) => {
-  dispatch({
-    type: CLOSE_ADD_TRANSACTION_DIALOG,
-  });
 };

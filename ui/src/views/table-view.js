@@ -6,11 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import _ from "lodash";
 
 import TransactionDialogView from "./transaction-dialog-view";
-import { setTableData } from "../actions/home-action";
+import { setTableData, deleteTransaction } from "../actions/home-action";
 import {
-  openDialog,
   saveTransaction,
-  closeDialog,
   getTransactionsData,
 } from "../actions/transactions-action";
 import categoriesData from "../tack/categories";
@@ -40,18 +38,25 @@ const TableView = ({ headers }) => {
 
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [dataForEditDialog, setDataForEditDialog] = useState();
-  const { selectedItemId, tableData, isDialogOpen } = useSelector(
+  const { selectedItemId, tableData, transactionsData } = useSelector(
     (state) => state.home
   );
 
   useEffect(() => {
     dispatch(setTableData(selectedItemId));
-  }, [selectedItemId]);
+  }, [selectedItemId, transactionsData]);
 
   const handleEdit = (id) => {
     const data = getTransactionDataById(id);
     setDataForEditDialog(data);
-    dispatch(openDialog());
+    setIsEditDialogOpen(true);
+  };
+
+  const handleDelete = (t_id) => {
+    dispatch(deleteTransaction(t_id)).then(() => {
+      dispatch(setTableData(selectedItemId));
+      dispatch(getTransactionsData());
+    });
   };
 
   const handleDialogClose = () => {
@@ -62,7 +67,7 @@ const TableView = ({ headers }) => {
     dispatch(saveTransaction(transactionData, t_id)).then(() => {
       dispatch(getTransactionsData());
       dispatch(setTableData(selectedItemId));
-      dispatch(closeDialog());
+      setIsEditDialogOpen(false);
     });
   };
 
@@ -72,6 +77,7 @@ const TableView = ({ headers }) => {
     delete data.user_id;
     delete data.type;
 
+    //Converting date and time into format which is accepted by html datetime-local input
     const datetimeSplit = data.datetime.split("-");
     const daySplit = datetimeSplit[0];
     const monthSplit = datetimeSplit[1];
@@ -79,7 +85,7 @@ const TableView = ({ headers }) => {
     datetimeSplit[1] = daySplit;
 
     let date = new Date(datetimeSplit.join("-"));
-  
+
     let day = date.getDate();
     day = day < 10 ? `0${day}` : day;
 
@@ -101,15 +107,11 @@ const TableView = ({ headers }) => {
     return data;
   };
 
-  const handleDelete = () => {
-    console.log("delete clicked");
-  };
-
   const getEditDialog = () => {
     return (
-      isDialogOpen && (
+      isEditDialogOpen && (
         <TransactionDialogView
-          open={isDialogOpen}
+          open={isEditDialogOpen}
           desc={dataForEditDialog.description}
           amount={dataForEditDialog.amount}
           category={dataForEditDialog.category}
@@ -130,11 +132,13 @@ const TableView = ({ headers }) => {
             <div className="tableCellIconsContainer">
               <EditIcon
                 fontSize="small"
+                cursor="pointer"
                 onClick={handleEdit.bind(this, rowData.t_id)}
                 style={{ marginRight: "15px" }}
               />
               <DeleteIcon
                 fontSize="small"
+                cursor="pointer"
                 onClick={handleDelete.bind(this, rowData.t_id)}
               />
             </div>

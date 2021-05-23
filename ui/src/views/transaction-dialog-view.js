@@ -6,15 +6,6 @@ import "../styles/transaction-form.css";
 import DialogView from "../viewlibraries/dialog-view";
 import homeUtils from "../utils/home-utils";
 import categoriesData from "../tack/categories";
-import {
-  closeDialog,
-  createNewTransaction,
-  getTransactionsData,
-} from "../actions/transactions-action";
-import {
-  getTopCategoriesData,
-  getDataForGraph,
-} from "../actions/dashboard-action";
 import alertify from "../viewlibraries/notistack/notistack-store";
 
 const TransactionDialogView = (props) => {
@@ -51,7 +42,6 @@ const TransactionDialogView = (props) => {
 
   const handleDialogClose = () => {
     props.onCloseHandler?.();
-    dispatch(closeDialog());
   };
 
   const validateFormData = () => {

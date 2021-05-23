@@ -15,12 +15,12 @@ export const setTableData = (selectedItemId) => async (dispatch) => {
   try {
     const res = await HomeService.getDataForTable(transactionType);
     let tableData = res.data.success;
-    tableData = tableData.map(row => {
+    tableData = tableData.map((row) => {
       row.amount = `₹${row.amount}`;
       row.datetime = HomeUtils.getDatetimeInReadableFormat(row.datetime);
       // row.category = HomeUtils.getLabelFromCategory(row.category);
       return row;
-    })
+    });
     dispatch({
       type: SET_TABLE_DATA,
       payload: { tableData },
@@ -28,5 +28,16 @@ export const setTableData = (selectedItemId) => async (dispatch) => {
   } catch (err) {
     alertify.error(err.toString() || "APPLICATION ERROR!");
     return await Promise.reject();
+  }
+};
+
+export const deleteTransaction = (t_id) => (dispatch) => {
+  try {
+    HomeService.deleteTransaction(t_id);
+    alertify.success("Transaction Successfully Deleted");
+    return Promise.resolve();
+  } catch (err) {
+    alertify.error(err.toString() || "APPLICATION ERROR");
+    return Promise.reject();
   }
 };

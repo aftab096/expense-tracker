@@ -24,7 +24,7 @@ const createTransaction = (transactionData) => {
 const saveTransaction = (transactionData, t_id) => {
   return axios.put(
     api_constants.BASE_PATH + api_constants.TRANSACTION,
-    {...transactionData, t_id},
+    { ...transactionData, t_id },
     {
       headers: authHeader(),
     }
@@ -53,6 +53,14 @@ const getDataForTable = (transactionType) => {
   );
 };
 
+const deleteTransaction = (t_id) => {
+  return axios.delete(
+    api_constants.BASE_PATH + api_constants.TRANSACTION + t_id,
+    {
+      headers: authHeader(),
+    }
+  );
+};
 export default {
   getTransactionsData,
   createTransaction,
@@ -60,4 +68,5 @@ export default {
   getDataForGraph,
   getDataForTable,
   saveTransaction,
+  deleteTransaction,
 };
