@@ -41,6 +41,7 @@ router.get("/topcategories", (req, res) => {
 
 router.post("/graph", async (req, res) => {
   const duration = req.body.duration;
+  const userId = req.header("userId");
   const endOfDay = new Date();
   endOfDay.setDate(endOfDay.getDate() + 1);
   endOfDay.setHours(0, 0, 0, 0);
@@ -51,9 +52,6 @@ router.post("/graph", async (req, res) => {
 
   const offset = getOffsetValueFromDuration(duration);
   const day = 86400000;
-
-  // const totalExpenseQuery = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE type = 'debit' AND
-  //   datetime BETWEEN ${startDayTimestamp} AND ${endofDayTimestamp}`
 
   let data = [];
   let totalExpense = 0;
@@ -81,7 +79,7 @@ router.post("/graph", async (req, res) => {
       months[fromDate.getMonth()]
     } - ${toDate.getDate()} ${months[toDate.getMonth()]}`;
 
-    const query = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE type = 'debit' AND
+    const query = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE user_id = '${userId}' AND type = 'debit' AND
     datetime BETWEEN ${from} AND ${to}`;
 
     try {
@@ -125,8 +123,8 @@ const getOffsetValueFromDuration = (duration) => {
 
 router.post("/transactionlist", (req, res) => {
   const transactionType = req.body.transactionType;
-
-  const query = `SELECT * FROM ${tableNameCosntants.TRANSACTIONS} WHERE type = '${transactionType}' ORDER BY datetime DESC`;
+  const userId = req.header("userId");
+  const query = `SELECT * FROM ${tableNameCosntants.TRANSACTIONS} WHERE user_id = '${userId}' AND type = '${transactionType}' ORDER BY datetime DESC`;
 
   connection.query(query, (err, result) => {
     if (err) res.status(500).json(err.stack);
