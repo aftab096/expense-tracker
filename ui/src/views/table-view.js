@@ -145,8 +145,7 @@ const TableView = ({ headers }) => {
           </TableCell>
         );
 
-      case "caegory":
-        const categoryId = rowData[column.id];
+      case "category":
         const category = _.find(categoriesData, { id: rowData[column.id] });
         const { label } = category;
         return <TableCell key={column.id}>{label}</TableCell>;
