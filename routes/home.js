@@ -25,7 +25,8 @@ router.get("/topcategories", (req, res) => {
 
   const query = `SELECT category,sum(amount) AS totalExpense FROM ${tableNameCosntants.TRANSACTIONS}
                   WHERE user_id = '${userId}' AND 
-                  type='debit' AND 
+                  type='debit' AND  
+                  category != 'special' AND
                   datetime >= ${timeStampOf30daysAgo} 
                   GROUP BY category 
                   ORDER BY totalExpense DESC
@@ -79,8 +80,11 @@ router.post("/graph", async (req, res) => {
       months[fromDate.getMonth()]
     } - ${toDate.getDate()} ${months[toDate.getMonth()]}`;
 
-    const query = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} WHERE user_id = '${userId}' AND type = 'debit' AND
-    datetime BETWEEN ${from} AND ${to}`;
+    const query = `SELECT SUM(amount) AS amount from ${tableNameCosntants.TRANSACTIONS} 
+                    WHERE user_id = '${userId}' AND 
+                    type = 'debit' AND 
+                    category != 'special' AND
+                    datetime BETWEEN ${from} AND ${to}`;
 
     try {
       const amount = await fetchDataForGraph(query);

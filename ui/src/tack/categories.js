@@ -65,6 +65,11 @@ const categoriesData = [
     type: "debit",
   },
   {
+    id: "special",
+    label: "Standard Costs",
+    type: "debit",
+  },
+  {
     id: "salary",
     label: "Salary",
     type: "credit",

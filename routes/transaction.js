@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 
@@ -32,7 +31,6 @@ router.put("/", (req, res) => {
             type ='${type}'
             WHERE user_id = '${userId}' AND t_id = '${t_id}'`;
 
-  console.log(query);
   connection.query(query, (err, result) => {
     if (err) res.status(500).json({ error: err.stack });
     else res.json({ success: "Transaction Saved Successfully" });
